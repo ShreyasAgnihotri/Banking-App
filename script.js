@@ -80,12 +80,24 @@ const displayMovements = function(movements){
 // createUsername(accounts)
 // console.log(accounts)
 
-const balance = function (movement){
-    const balance = movement.reduce((acc,cur) => acc+cur,0)
+const balance = function (account){
+    const balance = account.movements.reduce((acc,cur) => acc+cur,0)
       labelBalance.textContent = `Rs ${balance}`;
+    const Intr = balance * (account.interestRate)/100;
+    labelSumInterest.textContent = `Rs ${Intr}`;
 }
-
-
+const summary = function (movement) {
+  let In = movement.filter((function (mov){
+      return mov>0;}))
+  const Insum = In.reduce((prev,curr) => prev+curr,0)
+    labelSumIn.textContent = `Rs ${Insum}`;
+  let Out = movement.filter((function (mov) {
+    return mov<0;
+  }))
+  const OutSum = Out.reduce((prev,curr) => prev+curr,0)
+    labelSumOut.textContent = `Rs ${Math.abs(OutSum)}`
+  
+}
 btnLogin.addEventListener('click', function(e){
   e.preventDefault();
   let currentAccount = accounts.find(acc=>acc.username === inputLoginUsername.value);
@@ -93,7 +105,12 @@ btnLogin.addEventListener('click', function(e){
     labelWelcome.textContent = "Welcome Back";
     header.innerHTML= `Hello , ${currentAccount.owner.split(' ')[0]}`
     containerApp.style.opacity = 100
+    inputLoginUsername.value = inputLoginPin.value = "";
     displayMovements(currentAccount.movements);
-    balance(currentAccount.movements)
+    balance(currentAccount)
+    summary(currentAccount.movements)
+  }
+  else{
+    alert("Incorrect Credentials!")
   }
 })
