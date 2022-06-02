@@ -31,7 +31,7 @@ const account4 = {
   username: 'ss',
 };
 
-const accounts = [account1, account2, account3, account4];
+let accounts = [account1, account2, account3, account4];
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
@@ -64,22 +64,12 @@ const displayMovements = function(movements){
     const html = `
     <div class="movements__row">
           <div class="movements__type movements__type--${type}">${i+1} ${type}</div>
-          <div class="movements__value">${mov}</div>
+          <div class="movements__value">${Math.abs(mov)}</div>
         </div>
     `;
     containerMovements.insertAdjacentHTML('afterbegin',html)
   });
 }
-
-
-// const createUsername = function (accs) {
-//   accs.forEach(function (acc) {
-//     acc.username = acc.owner.toLowerCase().split(' ').map(name => name[0]).join('')
-//   });
-// };
-// createUsername(accounts)
-// console.log(accounts)
-
 const balance = function (account){
     const balance = account.movements.reduce((acc,cur) => acc+cur,0)
       labelBalance.textContent = `Rs ${balance}`;
@@ -106,9 +96,55 @@ btnLogin.addEventListener('click', function(e){
     header.innerHTML= `Hello , ${currentAccount.owner.split(' ')[0]}`
     containerApp.style.opacity = 100
     inputLoginUsername.value = inputLoginPin.value = "";
+    inputTransferAmount.value = inputTransferTo.value = "";
     displayMovements(currentAccount.movements);
     balance(currentAccount)
     summary(currentAccount.movements)
+    btnTransfer.addEventListener('click', function(e){
+      e.preventDefault();
+      let acc_username = inputTransferTo.value;
+      let transfer_acc = accounts.find(acc=>acc.owner === acc_username)
+      let transfer_amt = inputTransferAmount.value;
+      if(transfer_acc){
+        transfer_acc.movements.push(parseInt(transfer_amt))
+        currentAccount.movements.push(-transfer_amt)
+        displayMovements(currentAccount.movements)
+        balance(currentAccount)
+        summary(currentAccount.movements)
+        inputTransferAmount.value = inputTransferTo.value = "";
+        inputLoanAmount.value = "";
+      }
+      else{
+        alert("Incorrect Credentials")
+        inputTransferAmount.value = inputTransferTo.value = "";
+      }
+    })
+    btnLoan.addEventListener('click',function(e){
+      e.preventDefault();
+      let loan_amt = inputLoanAmount.value;
+      currentAccount.movements.push(parseInt(loan_amt))
+      displayMovements(currentAccount.movements)
+      balance(currentAccount)
+      summary(currentAccount.movements)
+      inputLoanAmount.value = "";
+    })
+    btnClose.addEventListener('click',function(e){
+      e.preventDefault()
+      let choice = confirm("Do You want to Delete the account?")
+      if (choice == true){
+        let currentAccount = accounts.find(acc=>acc.username === inputCloseUsername.value);
+        if (currentAccount?.pin === Number(inputClosePin.value)){
+          console.log("Hello")
+          accounts = accounts.filter(function(item){
+            return item!= currentAccount
+          })
+        containerApp.style.opacity = 0
+        labelWelcome.textContent = "Login to get started";
+        header.innerHTML= "Welcome, Login to Continue!"
+        console.log(accounts)
+        }
+      }
+    })
   }
   else{
     alert("Incorrect Credentials!")
