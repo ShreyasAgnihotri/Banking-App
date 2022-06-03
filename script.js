@@ -39,9 +39,10 @@ const labelSumIn = document.querySelector('.summary__value--in');
 const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInterest = document.querySelector('.summary__value--interest');
 const labelTimer = document.querySelector('.timer');
-const header = document.getElementById('h01')
+const header = document.getElementById('h02')
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
+const loginContainer = document.querySelector('.container');
 
 const btnLogin = document.querySelector('.login__btn');
 const btnTransfer = document.querySelector('.form__btn--transfer');
@@ -68,6 +69,13 @@ const displayMovements = function(movements){
         </div>
     `;
     containerMovements.insertAdjacentHTML('afterbegin',html)
+    const now = new Date();
+    const date = `${now.getDate()}`.padStart(2,0)
+    const month = `${now.getMonth() + 1}`.padStart(2,0)
+    const year = now.getFullYear()
+    const hour = now.getHours()
+    const minute = now.getMinutes()
+    labelDate.textContent = `${date}/${month}/${year}, ${hour}: ${minute}`
   });
 }
 const balance = function (account){
@@ -85,15 +93,22 @@ const summary = function (movement) {
     return mov<0;
   }))
   const OutSum = Out.reduce((prev,curr) => prev+curr,0)
-    labelSumOut.textContent = `Rs ${Math.abs(OutSum)}`
-  
-}
+  labelSumOut.textContent = `Rs ${Math.abs(OutSum)}`
+}   
+function replaceClass(name, oldClass, newClass) {
+  var elem = document.getElementById(name);
+  elem.classList.remove(oldClass);
+  elem.classList.add(newClass);
+} 
 btnLogin.addEventListener('click', function(e){
   e.preventDefault();
   let currentAccount = accounts.find(acc=>acc.username === inputLoginUsername.value);
   if (currentAccount?.pin === Number(inputLoginPin.value)){
-    labelWelcome.textContent = "Welcome Back";
+    labelWelcome.textContent = `Welcome Back, ${currentAccount.owner.split(' ')[0]}`;
     header.innerHTML= `Hello , ${currentAccount.owner.split(' ')[0]}`
+    header.style.opacity = 100;
+    loginContainer.style.opacity = 0
+    loginContainer.style.height = 0
     containerApp.style.opacity = 100
     inputLoginUsername.value = inputLoginPin.value = "";
     inputTransferAmount.value = inputTransferTo.value = "";
@@ -145,6 +160,32 @@ btnLogin.addEventListener('click', function(e){
         }
       }
     })
+    btnSort.addEventListener('click', function(e) {
+      currentAccount.movements.sort( (a,b) => a-b);
+      displayMovements(currentAccount.movements)
+    })
+    const now = new Date();
+    const date = `${now.getDate()}`.padStart(2,0)
+    const month = `${now.getMonth() + 1}`.padStart(2,0)
+    const year = now.getFullYear()
+    const hour = now.getHours()
+    const minute = now.getMinutes()
+    labelDate.textContent = `${date}/${month}/${year}, ${hour}: ${minute}`
+    const tick = function () {
+      const min = String(Math.trunc(time/60)).padStart(2,0)
+      const sec = String(time%60).padStart(2,0)
+      labelTimer.textContent = `${min}:${sec}`
+      if(time===0){
+        clearInterval(timer)
+        alert("You are Logged Out!")
+        containerApp.style.opacity = 0
+        labelWelcome.textContent = "Login to get started";
+        header.innerHTML= "Welcome, Login to Continue!"
+    }
+    time--;
+  }
+  let time = 300
+  const timer = setInterval(tick,1000)   
   }
   else{
     alert("Incorrect Credentials!")
