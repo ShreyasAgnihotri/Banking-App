@@ -3,12 +3,22 @@
   padding: 0;
   box-sizing: inherit;
 }
-
+#h02{
+  opacity: 0;
+  color: #444;
+  padding-left: 600px;
+  padding: auto;
+}
 html {
   font-size: 62.5%;
   box-sizing: border-box;
 }
-
+.label{
+  font-family: "Poppins", sans-serif;
+  color: rgb(255, 249, 249);
+  font-size: 15px;
+  display: block;
+}
 body {
   font-family: "Poppins", sans-serif;
   color: #444;
@@ -23,7 +33,15 @@ nav {
   align-items: center;
   padding: 0 2rem;
 }
-
+.container{
+  background-image: linear-gradient(to top left, #383b3b, #676865);
+  height: 350px;
+	width: 500px;
+	margin: 100px auto;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+	border-radius: 20px;
+  opacity: 100;
+}
 .welcome {
   font-size: 1.9rem;
   font-weight: 500;
@@ -34,9 +52,23 @@ nav {
 }
 
 .login {
-  display: flex;
+  display: block;
+  padding-left: 70px; 
+  padding-top: 30px; 
+  border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+  
 }
-
+.login_un{
+  padding-right: 100px;
+  padding-bottom: 30px;
+  padding-top: 10px;
+}
+.login_pw{
+  padding-left: 58px;
+  padding-bottom: 40px;
+  display: flex; 
+}
 .login__input {
   border: none;
   padding: 0.5rem 2rem;
@@ -46,26 +78,32 @@ nav {
   width: 12rem;
   border-radius: 10rem;
   margin-right: 1rem;
-  color: inherit;
-  border: 1px solid #fff;
+  color: black;
+  border: 1px solid rgb(33, 10, 10);
   transition: all 0.3s;
+  width: 200px;
+  
+}
+.form{
+  display: grid;
 }
 .main
 
 .login__input:focus {
   outline: none;
   border: 1px solid #ccc;
+  
 }
 
 .login__input::placeholder {
-  color: #bbb;
+  color: rgb(16, 14, 14);
 }
 
 .login__btn {
   border: none;
   background: none;
   font-size: 2.2rem;
-  color: inherit;
+  color: white;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -78,7 +116,7 @@ nav {
   color: #777;
 }
 .app {
-  position: relative;
+  position: inherit;
   max-width: 100rem;
   margin: 4rem auto;
   display: grid;
@@ -87,6 +125,7 @@ nav {
   gap: 2rem;
   opacity: 0;
   transition: all 1s;
+  padding-top: 0px;
 }
 
 .balance {
@@ -184,7 +223,6 @@ nav {
 .summary__value--out {
   color: #f5465d;
 }
-
 .btn--sort {
   margin-left: auto;
   border: none;
@@ -212,11 +250,14 @@ nav {
   background-image: linear-gradient(to top left, #e52a5a, #ff585f);
 }
 h1 {
-  padding-top: 100px;
-  padding-bottom: 50px;
-  padding-left: 530px;
+  padding-top: 30px;
+  padding-bottom: 40px;
+  padding-left: 30px;
   text-size-adjust: 100px;
   font-size: 30px;
+  color:rgb(255, 249, 249);
+  font-family: "Poppins", sans-serif;
+  opacity: 100;
 }
 .midloginpage{
   opacity: 100;
@@ -231,7 +272,7 @@ h2 {
 .form {
   display: grid;
   grid-template-columns: 2.5fr 2.5fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto; 
   gap: 0.4rem 1rem;
 }
 
