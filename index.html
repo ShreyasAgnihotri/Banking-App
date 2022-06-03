@@ -19,26 +19,23 @@
     <nav>
       <p class="welcome">Log in to get started</p>
       <img src="logo.png" alt="Logo" class="logo" />
-      <form class="login">
-        <input
-          type="text"
-          placeholder="user"
-          class="login__input login__input--user"
-        />
-       
-        <input
-          type="text"
-          placeholder="PIN"
-          maxlength="4"
-          class="login__input login__input--pin"
-        />
-        <button class="login__btn">&rarr;</button>
-      </form>
     </nav>
+    <div class = "container">
     <div class = "midloginpage">
-    <h1 id = "h01">Welcome, Login to Continue!</h1></div>
+      <h1 id = "h01">Welcome, Login to Continue!</h1></div>
+      <form class="login">
+      <div class = "login_un">
+      <p class="label">UserName: 
+      <input type="text" placeholder="user" class="login__input login__input--user"/></p></div>
+      <div class="login_pw">
+      <p class = "label">Pin: 
+      <input type="text" placeholder="PIN" maxlength="4" class="login__input login__input--pin"/></p>
+      <button class="login__btn">&rarr;</button></div>
+    </form>
+    </div>
+   <h1 id = "h02">Welcome, </h1>
+    
     <main class="app">
-      
       <div class="balance">
         <div>
           <p class="balance__label">Current balance</p>
